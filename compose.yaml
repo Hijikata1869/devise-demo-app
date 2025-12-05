@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: devise_demo_app_development
+      POSTGRES_USER: devise_demo_app_user
+      POSTGRES_PASSWORD: devise_demo_app_password
+    volumes:
+      - devise-demo-app-db-data:/var/lib/postgresql/data
+  api:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/devise-demo-app
+      - devise-demo-app-bundle-data:/devise-demo-app/vendor/bundle
+volumes:
+  devise-demo-app-db-data:
+  devise-demo-app-bundle-data:
